@@ -6,8 +6,12 @@ import socketConnexion from "./socketConnexion.controller";
 const socket = (server: Server) => {
   const { io }: { io: SocketIOServer } = socketConfig(server);
 
-  io.on("connection", async (socket: any) => {
+  io.on("connection", async (socket: Socket) => {
     await socketConnexion.userConnected(socket);
+
+    socket.on("disconnect", () => {
+      socketConnexion.handleDisconnect(socket);
+    });
   });
 };
 
