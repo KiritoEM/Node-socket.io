@@ -1,8 +1,8 @@
 import app from "./app";
 import http from "http";
-import sendMessageController from "../controller/sendMessage.controller";
+import socket from "../controller/socket.controller";
 
 const server = http.createServer(app);
-const io = sendMessageController.configureSocket(server);
+const io = socket(server);
 
 export { server, io };
