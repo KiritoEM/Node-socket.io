@@ -13,11 +13,15 @@ class userSocket {
   static handleDisconnect(socket: Socket) {
     console.log(`Utilisateur déconnecté avec l'ID : ${socket.id}`);
     const userId = socket.id;
-    delete this.connectedUsers[userId];
+    userId ? delete this.connectedUsers[userId] : null;
   }
 
   static getSocketByUserId(userId: string): Socket | undefined {
-    return this.connectedUsers[userId];
+    const userSocket = userId ? this.connectedUsers[userId] : undefined;
+    if (!userSocket) {
+      console.log(`Aucun utilisateur trouvé avec l'ID : ${userId}`);
+    }
+    return userSocket;
   }
 }
 
