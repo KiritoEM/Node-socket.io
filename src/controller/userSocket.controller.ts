@@ -1,22 +1,23 @@
 import { Socket } from "socket.io";
 
 class userSocket {
+  //de clé string et de valeur socket
   static connectedUsers: Record<string, Socket> = {};
 
   static async userConnected(socket: Socket) {
     console.log(`Utilisateur connecté avec l'ID : ${socket.id}`);
     const userId = socket.id;
-    userSocket.connectedUsers[userId] = socket;
+    this.connectedUsers[userId] = socket;
   }
 
   static handleDisconnect(socket: Socket) {
     console.log(`Utilisateur déconnecté avec l'ID : ${socket.id}`);
     const userId = socket.id;
-    delete userSocket.connectedUsers[userId];
+    delete this.connectedUsers[userId];
   }
 
   static getSocketByUserId(userId: string): Socket | undefined {
-    return userSocket.connectedUsers[userId];
+    return this.connectedUsers[userId];
   }
 }
 
