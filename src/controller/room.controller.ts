@@ -19,13 +19,19 @@ class socketRoom {
   ) {
     const { roomName, message } = data;
 
-    socket.to(roomName).emit("message", {
-      from: socket.id,
-      message,
-    });
-    console.log(
-      `message du room : ${roomName} , envoyé par l' user : ${socket.id} : ${message}`
-    );
+    if (socket.rooms.has(roomName)) {
+      socket.to(roomName).emit("message", {
+        from: socket.id,
+        message,
+      });
+      console.log(
+        `Message du room : ${roomName}, envoyé par l'utilisateur : ${socket.id} : ${message}`
+      );
+    } else {
+      console.log(
+        `L'utilisateur ${socket.id} n'a pas rejoint la room ${roomName}`
+      );
+    }
   }
   static joinRoom(socket: Socket, roomName: string) {
     socket.join(roomName);
